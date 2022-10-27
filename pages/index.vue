@@ -48,7 +48,7 @@
                 return-object
               ></v-select>
               <!-- dropdown to choose command parameter-->
-              <template v-if="selectedCommand">
+              <template v-if="selectedCommand && selectedCommand.parameters">
                 <template v-if="selectedCommand.parameters.type == 'list'">
                   <v-select
                     v-model="selectedParameter"
