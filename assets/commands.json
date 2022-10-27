@@ -173,7 +173,7 @@
     {
         "name": "reset functions (send this command UNconfirmed only to avoid boot loops!)",
         "value": "09",
-        "help": "0 = restart device (coldstart)\n             1 = (reserved, currently does nothing)\n             2 = reset device to factory settings and restart device\n             3 = flush send queues\n             4 = restart device (warmstart)\n             8 = reboot device to maintenance mode (local web server)\n             9 = reboot device to OTA update via Wifi mode",
+        "help": "0 = restart device (coldstart)\n1 = (reserved, currently does nothing)\n2 = reset device to factory settings and restart device\n3 = flush send queues\n4 = restart device (warmstart)\n8 = reboot device to maintenance mode (local web server)\n9 = reboot device to OTA update via Wifi mode",
         "parameters": {
             "type": "list",
             "list": [
@@ -231,5 +231,245 @@
             "step": 1,
             "default": 0
         }
+    },
+    {
+        "name": "set Bluetooth channel switch interval timer",
+        "value": "0C",
+        "help": "0 ... 255 duration for scanning a bluetooth advertising channel in seconds/100\ne.g. 8 -> each channel is scanned for 80 milliseconds [default]",
+        "parameters": {
+            "type": "number",
+            "min": 0,
+            "max": 255,
+            "step": 1,
+            "default": 8
+        }
+    },
+    {
+        "name": "set Bluetooth scanner",
+        "value": "0E",
+        "help": "0 = disabled\n 1 = enabled [default]",
+        "parameters": {
+            "type": "list",
+            "list": [
+                {
+                    "name": "disabled",
+                    "value": "00"
+                },
+                {
+                    "name": "enabled [default]",
+                    "value": "01"
+                }
+            ]
+        }
+    },
+    {
+        "name": "set WIFI antenna switch (works on LoPy/LoPy4/FiPy only)",
+        "value": "0F",
+        "help": "0 = internal antenna [default]\n 1 = external antenna",
+        "parameters": {
+            "type": "list",
+            "list": [
+                {
+                    "name": "internal antenna [default]",
+                    "value": "00"
+                },
+                {
+                    "name": "external antenna",
+                    "value": "01"
+                }
+            ]
+        }
+    },
+    {
+        "name": "set RGB led luminosity (works on LoPy/LoPy4/FiPy and LoRaNode32 shield only)",
+        "value": "10",
+        "help": "0 ... 100 percentage of luminosity (100% = full light)\ne.g. 50 -> 50% of luminosity [default]",
+        "parameters": {
+            "type": "number",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 50
+        }
+    },
+    {
+        "name": "set user sensor mode",
+        "value": "13",
+        "help": "byte 1 = user sensor number (1..3)\nbyte 2 = sensor mode (0 = disabled / 1 = enabled [default])",
+        "parameters": {
+            "type": "list",
+            "list": [
+                {
+                    "name": "user sensor 1",
+                    "value": "0101"
+                },
+                {
+                    "name": "user sensor 2",
+                    "value": "0201"
+                },
+                {
+                    "name": "user sensor 3",
+                    "value": "0301"
+                }
+            ]
+        }
+    },
+    {
+        "name": "set payload mask",
+        "value": "14",
+        "help": "byte 1 = sensor data payload mask (0..255, meaning of bits see below)\n0x01 = COUNT_DATA\n0x02 = RESERVED_DATA\n0x04 = MEMS_DATA\n0x08 = GPS_DATA\n0x10 = SENSOR_1_DATA\n0x20 = SENSOR_2_DATA\n0x40 = SENSOR_3_DATA\n0x80 = BATT_DATA\nbytes can be combined eg COUNT_DATA + SENSOR_1_DATA + BATT_DATA: `0x01 | 0x10 | 0x80 = 0x91",
+        "parameters": {
+            "type": "list",
+            "list": [
+                {
+                    "name": "COUNT_DATA",
+                    "value": "01"
+                },
+                {
+                    "name": "RESERVED_DATA",
+                    "value": "02"
+                },
+                {
+                    "name": "MEMS_DATA",
+                    "value": "04"
+                },
+                {
+                    "name": "GPS_DATA",
+                    "value": "08"
+                },
+                {
+                    "name": "SENSOR_1_DATA",
+                    "value": "10"
+                },
+                {
+                    "name": "SENSOR_2_DATA",
+                    "value": "20"
+                },
+                {
+                    "name": "SENSOR_3_DATA",
+                    "value": "40"
+                },
+                {
+                    "name": "BATT_DATA",
+                    "value": "80"
+                }
+            ]
+        }
+    },
+    {
+        "name": "set BME data on/off",
+        "value": "15",
+        "help": "0 = BME data off\n1 = BME data on, sends BME data on port 7 [default]",
+        "parameters": {
+            "type": "list",
+            "list": [
+                {
+                    "name": "BME data off",
+                    "value": "00"
+                },
+                {
+                    "name": "BME data on, sends BME data on port 7 [default]",
+                    "value": "01"
+                }
+            ]
+        }
+    },
+    {
+        "name": "set battery data on/off",
+        "value": "16",
+        "help": "0 = battery data off [default]\n1 = battery data on, sends voltage on port 8",
+        "parameters": {
+            "type": "list",
+            "list": [
+                {
+                    "name": "battery data off [default]",
+                    "value": "00"
+                },
+                {
+                    "name": "battery data on, sends voltage on port 8",
+                    "value": "01"
+                }
+            ]
+        }
+    },
+    {
+        "name": "set Wifi scanner",
+        "value": "17",
+        "help": "0 = disabled\n1 = enabled [default]",
+        "parameters": {
+            "type": "list",
+            "list": [
+                {
+                    "name": "disabled",
+                    "value": "00"
+                },
+                {
+                    "name": "enabled [default]",
+                    "value": "01"
+                }
+            ]
+        }
+    },
+    {
+        "name": "reserved",
+        "value": "18",
+        "help": "unused, does nothing"
+    },
+    {
+        "name": "set sleep cycle",
+        "value": "19",
+        "help": "bytes 1..2 = device sleep cycle in seconds/10 (MSB), 1 ... 255\ne.g. {0x04, 0xB0} -> device sleeps 20 minutes after each send cycle [default = 0]",
+        "parameters": {
+            "type": "number",
+            "min": 0,
+            "max": 65535,
+            "step": 1,
+            "default": 1200
+        }
+    },
+    {
+        "name": "load device configuration",
+        "value": "20",
+        "help": "Current device runtime configuration will be loaded from NVRAM, replacing current settings immediately (use with care!)"
+    },
+    {
+        "name": "store device configuration",
+        "value": "21",
+        "help": "Current device runtime configuration is stored in NVRAM, will be reloaded after restart"
+    },
+    {
+        "name": "get device configuration",
+        "value": "80",
+        "help": "Device answers with it's current configuration on Port 3."
+    },
+    {
+        "name": "get device status",
+        "value": "81",
+        "help": "Device answers with it's current status on Port 2."
+    },
+    {
+        "name": "get battery status",
+        "value": "83",
+        "help": "Device answers with battery voltage on Port 8."
+    },
+    {
+        "name": "get device GPS status",
+        "value": "84",
+        "help": "Device answers with it's current status on Port 4."
+    },
+    {
+        "name": "get BME280 / BME680 sensor data",
+        "value": "85",
+        "help": "Device answers with BME sensor data set on Port 7."
+    },
+    {
+        "name": "get time/date",
+        "value": "86",
+        "help": "Device answers with it's current time on Port 2:\nbytes 1..4 = time/date in UTC epoch seconds (LSB)\nbyte 5 = time source & status, see below\n   bits 0..3 time source\n0x00 = GPS\n0x01 = RTC\n0x02 = LORA\n0x03 = unsynched\n0x04 = set (source unknown)\n    bits 4..7 esp32 sntp time status\n0x00 = SNTP_SYNC_STATUS_RESET\n0x01 = SNTP_SYNC_STATUS_COMPLETED\n0x02 = SNTP_SYNC_STATUS_IN_PROGRESS"
+    },
+    {
+        "name": "set time/date",
+        "value": "88",
+        "help": "bytes 1..4 = time/date to set in UTC epoch seconds (MSB, e.g. https://www.epochconverter.com/hex)"
     }
 ]
