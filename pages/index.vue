@@ -37,7 +37,7 @@
             <v-card-title class="text-h5"> Command helper </v-card-title>
             <v-card-text>
               <!-- dropdown to choose general command-->
-              <v-select
+              <v-autocomplete
                 v-model="selectedCommand"
                 :items="commands"
                 label="Select Command"
@@ -46,11 +46,11 @@
                 dense
                 @change="updateCommand"
                 return-object
-              ></v-select>
+              ></v-autocomplete>
               <!-- dropdown to choose command parameter-->
               <template v-if="selectedCommand && selectedCommand.parameters">
                 <template v-if="selectedCommand.parameters.type == 'list'">
-                  <v-select
+                  <v-autocomplete
                     v-model="selectedParameter"
                     :items="selectedCommand.parameters.list"
                     label="Select Parameter"
@@ -59,7 +59,7 @@
                     dense
                     @change="updateParameter"
                     return-object
-                  ></v-select>
+                  ></v-autocomplete>
                 </template>
                 <template
                   v-else-if="selectedCommand.parameters.type == 'number'"
@@ -98,17 +98,11 @@
           <v-card color="#385F73" dark>
             <v-card-title class="text-h5"> Output </v-card-title>
             <v-card-text>
-              <v-textarea
+              <v-text-field
                 v-model="output"
-                :rows="10"
-                :auto-grow="true"
-                :counter="false"
                 :outlined="true"
-                :readonly="true"
-                :no-resize="true"
                 :hide-details="true"
-                :color="color"
-              ></v-textarea>
+              ></v-text-field>
             </v-card-text>
             <v-card-actions>
               <v-btn @click="output = ''" color="error">Clear</v-btn>
@@ -128,7 +122,6 @@ var commands = require("~/assets/commands.json");
 export default {
   data: () => ({
     output: "",
-    color: "white",
     selectedCommand: null,
     selectedParameter: null,
     commands: commands,
@@ -137,6 +130,15 @@ export default {
   methods: {
     updateCommand() {
       this.output = this.selectedCommand.value;
+      // if selectedCommand.parameters is a list set first item as selectedParameter
+      if (this.selectedCommand.parameters) {
+        if (this.selectedCommand.parameters.type == "list") {
+          this.selectedParameter = this.selectedCommand.parameters.list[0];
+          var parameter =
+            this.selectedParameter.value ?? this.selectedParameter;
+          this.output = this.selectedCommand.value + parameter;
+        }
+      }
     },
     updateParameter() {
       var parameter = this.selectedParameter.value ?? this.selectedParameter;
@@ -157,7 +159,6 @@ export default {
       // convert output to HEX or BASE64
       if (type == "HEX") {
         this.output = this.hexToBase64(this.output);
-        this.color = "red";
       } else if (type == "BASE64") {
         this.output = btoa(this.output);
       }
