@@ -12,8 +12,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - app',
-    title: 'paxcounter-remote-commands-helper',
+    title: 'Paxcounter Remote Commands Helper',
     htmlAttrs: {
       lang: 'en'
     },
@@ -52,7 +51,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: false,
+      dark: true,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -61,14 +60,8 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        },
-        light: {
-          primary: '#3f51b5',
-          secondary: '#b0bec5',
-          accent: '#8c9eff',
-          error: '#b71c1c',
-          info: '#FFFFFF',
+          success: colors.green.accent3,
+          paxcounter: '#4051b5'
         },
       }
     }

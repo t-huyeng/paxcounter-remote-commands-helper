@@ -1,35 +1,31 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer v-model="drawer" fixed app>
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
+    <!-- add a navbar with the logo and the link to github of the paxcounter project -->
+    <v-app-bar app color="#4051b5" dark>
+      <v-toolbar-title class="ml-0 pl-3">
+        <v-img max-width="200"
+          src="https://raw.githubusercontent.com/cyberman54/ESP32-Paxcounter/master/docs/assets/paxcounter_logo_white.svg"></v-img>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn href="https://cyberman54.github.io/ESP32-Paxcounter" target="_blank" text>
+        <v-icon dark> mdi-book </v-icon> Documentation
+      </v-btn>
     </v-app-bar>
+
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
     <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <!-- add link to github and made with <3 -->
+      <v-row align="center" justify="center">
+        <v-col class="text-center" cols="12">
+          <a href="https://github.com/t-huyeng/paxcounter-remote-commands-helper" target="_blank">
+            <v-icon color="white"> mdi-github </v-icon>
+          </a>
+        </v-col>
+      </v-row>
     </v-footer>
   </v-app>
 </template>
@@ -39,17 +35,14 @@ export default {
   name: "DefaultLayout",
   data() {
     return {
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Welcome",
-          to: "/",
-        },
-      ],
-      title: "Helper",
     };
   },
 };
 </script>
+
+<style scoped>
+.theme--dark.v-application {
+  background-color: #2e303e;
+}
+
+</style>
